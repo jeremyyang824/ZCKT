@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ZCKT.Web</name>
+    </assembly>
+    <members>
+        <member name="M:ZCKT.Web.Bootstrapper.Run">
+            <summary>
+            在应用程序启动时运行的代码
+            </summary>
+        </member>
+        <member name="M:ZCKT.Web.Controllers.ItemsController.Get(System.Net.Http.HttpRequestMessage,System.String)">
+            <summary>
+            获取物料信息
+            </summary>
+            <param name="id">物料ID</param>
+            <returns>物料信息</returns>
+        </member>
+    </members>
+</doc>

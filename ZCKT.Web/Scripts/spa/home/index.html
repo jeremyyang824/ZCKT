@@ -1,0 +1,17 @@
+﻿<div id="leftRegion">
+    <div class="form-inline" style="margin-top:5px; margin-bottom:5px;">
+        <select ng-model="searchKey" class="form-control input-sm" ng-options="option.value as option.name for option in searchConitions"></select>
+        <div class="input-group input-group-sm">
+            <input type="text" class="form-control" ng-model="searchVal" />
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="search()">查询<i class="fa fa-search fa-fw"></i></button>
+            </span>
+        </div>
+    </div>
+    <bom-tree username=""></bom-tree>
+</div>
+<div id="rightRegion">
+    <div class="col-md-12">
+        adsfasdf
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html ng-app="zckt">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中臣零配件查询系统</title>
+    @Styles.Render("~/bundles/css/vendors")
+    @Scripts.Render("~/bundles/scripts/modernizr")
+</head>
+<body ng-controller="rootCtrl">
+    <top-bar></top-bar>
+    <div id="zcktContainer" ng-view class="page {{ pageClass }}">
+    </div>
+    @Scripts.Render("~/bundles/scripts/vendors")
+    @Scripts.Render("~/bundles/scripts/spa")
+</body>
+</html>
