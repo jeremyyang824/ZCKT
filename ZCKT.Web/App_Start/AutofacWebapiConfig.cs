@@ -34,23 +34,31 @@ namespace ZCKT.Web
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
 
             //Infrastructure
-            builder.RegisterType(typeof(DBHelperProvider))
-                .AsSelf()
-                .WithParameter("connectionStringName", "ZCKT")
-                .InstancePerRequest();
+            //builder.RegisterType(typeof(DBHelperProvider))
+            //    .AsSelf()
+            //    .WithParameter("connectionStringName", "ZCKT")
+            //    .Named<DBHelperProvider>("ZCKT")
+            //    .InstancePerRequest();
+
+            builder.RegisterInstance(new DBHelperProvider("ZCKT"))
+                .Named<DBHelperProvider>("ZCKT");
+
+            builder.RegisterInstance(new DBHelperProvider("ZCJX"))
+                .Named<DBHelperProvider>("ZCJX");
 
             //builder.RegisterType(typeof (UnitOfWorkManager))
             //    .As<IUnitOfWorkManager>()
             //    .InstancePerRequest();
 
             //Repositories
-            builder.RegisterType<PartItemRepository>()
+            builder.Register(ctx => new PartItemRepository(ctx.ResolveNamed<DBHelperProvider>("ZCKT")))
                 .AsSelf()
                 .InstancePerRequest();
 
-            builder.RegisterType<MemberRepository>()
+            builder.Register(ctx => new MemberRepository(ctx.ResolveNamed<DBHelperProvider>("ZCJX")))
                 .AsSelf()
                 .InstancePerRequest();
+
 
             //AppService
             builder.RegisterType<ItemAppService>()

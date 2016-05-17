@@ -34,10 +34,19 @@
             if (typeof error == 'string')
                 return error;
 
+            if (error.ExceptionMessage && typeof error.ExceptionMessage == 'string')
+                return error.ExceptionMessage;
+
+            if (error.Message && typeof error.Message == 'string')
+                return error.Message;
+
+            if (error.errors)
+                return getErrorMsg(error.errors);
+
             var msg = '';
             if (Array.isArray(error)) {
                 error.forEach(function (err) {
-                    msg += err + '<br/>';
+                    msg += err.toString() + '<br/>';
                 });
             }
             return msg;

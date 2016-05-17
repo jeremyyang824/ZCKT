@@ -16,12 +16,11 @@ body {
 
 #leftRegion {
     width: inherit;
-    min-width: 300px;
-    max-width: 500px;
+    width: 320px;
     float: left;
     height: 100%;
     position: relative;
-    overflow-y: auto;
+    overflow-y: hidden; /* TODO：set height */
     overflow-x: hidden;
     -webkit-box-shadow: 3px 6px 12px rgba(0, 0, 0, .175);
     -ms-box-shadow: 3px 6px 12px rgba(0, 0, 0, .175);
@@ -34,14 +33,22 @@ body {
 }
 
 .bomtree {
+    width: 100%;
+    position: absolute;
+    top: 38px;
+    bottom: 10px;
+    left: 0px;
+    overflow-y: scroll;
 }
 
+    /* hide bom-tree icon */
+    .bomtree .jstree li > a > .jstree-icon {
+        display: none !important;
+    }
 
-/* hide bom-tree icon */
-.bomtree .jstree li > a > .jstree-icon {
-    display: none !important;
+.tooltip-align-left {
+    text-align: left;
 }
-
 /*************************/
 
 #sidebar {
