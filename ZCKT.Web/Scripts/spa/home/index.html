@@ -1,17 +1,25 @@
 ﻿<div id="leftRegion">
-    <div class="form-inline" style="margin-top:5px; margin-bottom:5px;">
+    <div class="form-inline" style="margin-top: 5px; margin-bottom: 5px;">
         <select ng-model="searchKey" class="form-control input-sm" ng-options="option.value as option.name for option in searchConitions"></select>
         <div class="input-group input-group-sm">
-            <input type="text" class="form-control" ng-model="searchVal" />
+            <input type="text" class="form-control" ng-model="searchVal" ng-trim="true" style="width: 148px;" />
             <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="search()">查询<i class="fa fa-search fa-fw"></i></button>
+                <button class="btn btn-default" type="button" ng-click="onSearch()">查询<i class="fa fa-search fa-fw"></i></button>
             </span>
         </div>
     </div>
-    <bom-tree username="" select-node-Id=""></bom-tree>
+    <bom-tree username="{{username}}" select-node-id=""></bom-tree>
 </div>
+<collapse-bar is-open="resultBarIsOpen">
+    <div class="list-group">
+        <a class="list-group-item result-item" ng-repeat="item in searchResult" ng-click="onSelectItem(item)" ng-class="isActived(item)">
+            <h5 class="list-group-item-heading">{{item.FullName}}</h5>
+            <div class="list-group-item-text">{{item.PartName}}</div>
+        </a>
+    </div>
+</collapse-bar>
 <div id="rightRegion">
     <div class="col-md-12">
-        adsfasdf
+        adsfasdf:{{resultBarIsOpen}}
     </div>
 </div>

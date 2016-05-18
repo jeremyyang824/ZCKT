@@ -60,6 +60,7 @@ namespace ZCKT.Web
                 //"~/Scripts/spa/directives/sideBar.directive.js",
                 "~/Scripts/spa/directives/topBar.directive.js",
                 "~/Scripts/spa/directives/bomTree.directive.js",
+                "~/Scripts/spa/directives/collapseBar.directive.js",
                 //controller
                 "~/Scripts/spa/home/rootCtrl.js",
                 "~/Scripts/spa/home/indexCtrl.js"

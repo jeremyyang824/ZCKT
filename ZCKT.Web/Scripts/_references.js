@@ -13,6 +13,7 @@
 /// <reference path="../content/vendors/toastr/toastr.js" />
 /// <reference path="spa/app.js" />
 /// <reference path="spa/directives/bomtree.directive.js" />
+/// <reference path="spa/directives/collapsebar.directive.js" />
 /// <reference path="spa/directives/topbar.directive.js" />
 /// <reference path="spa/home/indexctrl.js" />
 /// <reference path="spa/home/rootctrl.js" />

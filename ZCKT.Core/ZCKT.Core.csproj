@@ -76,6 +76,7 @@
     <Compile Include="DBHelpers\DBHelper.Core.cs" />
     <Compile Include="DBHelpers\DBHelper.StringOverloads.cs" />
     <Compile Include="DBHelpers\RawValue.cs" />
+    <Compile Include="DTOs\ItemSearchInputDto.cs" />
     <Compile Include="DTOs\LoginInputDto.cs" />
     <Compile Include="Infrastructure\AutoMapperExtension.cs" />
     <Compile Include="Infrastructure\BaseAppService.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\BaseRepository.cs" />
     <Compile Include="Infrastructure\BaseValidatableObject.cs" />
+    <Compile Include="Validators\ItemSearchInputDtoValidator.cs" />
     <Compile Include="Validators\LoginInputDtoValidator.cs" />
     <Compile Include="ValueObjects\MembershipContext.cs" />
     <Compile Include="WebApi\ApiControllerBase.cs" />

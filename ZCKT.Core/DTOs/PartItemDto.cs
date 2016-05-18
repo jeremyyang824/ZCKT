@@ -38,6 +38,11 @@ namespace ZCKT.DTOs
         /// </summary>
         public decimal? PartPrice { get; set; }
 
+        /// <summary>
+        /// 子项数量
+        /// </summary>
+        public int ChildCount { get; set; }
+
         public string FullName
         {
             get { return $"{(CodeID == "000000000" ? "" : CodeID + "_")}{ItemCode}"; }

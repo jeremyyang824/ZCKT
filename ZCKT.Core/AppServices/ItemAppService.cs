@@ -59,5 +59,45 @@ namespace ZCKT.AppServices
         {
             return this.partItemRepository.GetComponentItems(parentId).MapTo<IEnumerable<PartItemDto>>();
         }
+
+        /// <summary>
+        /// 查找物料
+        /// </summary>
+        /// <param name="username">用户名</param>
+        /// <param name="searchKey">Content/HomCode/PartName</param>
+        /// <param name="searchValue"></param>
+        /// <returns></returns>
+        public IEnumerable<PartItemDto> FindItems(string username, string searchKey, string searchValue)
+        {
+            if (string.IsNullOrWhiteSpace(searchKey))
+                throw new ArgumentNullException("searchKey");
+            if (string.IsNullOrWhiteSpace(searchValue))
+                throw new ArgumentNullException("searchValue");
+
+            var products = this.memberRepository.GetUserProductTypes(username);
+            if (!products.Any())
+                return new PartItemDto[0];  //none!
+
+            IEnumerable<PartItemDto> results = null;
+            if (searchKey == "Content")
+            {
+                results = this.partItemRepository.FindItemsByContent(products, searchValue)
+                    .MapTo<IEnumerable<PartItemDto>>();
+            }
+            else if (searchKey == "HomCode")
+            {
+                results = this.partItemRepository.FindItemsByHomcode(products, searchValue)
+                    .MapTo<IEnumerable<PartItemDto>>();
+            }
+            else if (searchKey == "PartName")
+            {
+                results = this.partItemRepository.FindItemsByPartname(products, searchValue)
+                    .MapTo<IEnumerable<PartItemDto>>();
+            }
+            else
+                throw new DomainException("Unknow search key [{0}]!", searchKey);
+
+            return results;
+        }
     }
 }

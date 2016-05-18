@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ZCKT.AppServices;
+using ZCKT.DTOs;
 using ZCKT.WebApi;
 
 namespace ZCKT.Web.Controllers
@@ -66,6 +67,17 @@ namespace ZCKT.Web.Controllers
             {
                 var components = this.itemAppService.GetComponentItems(pid);
                 return request.CreateResponse(HttpStatusCode.OK, components);
+            });
+        }
+
+        [HttpPost]
+        [Route("search/{username}")]
+        public HttpResponseMessage FindItems(HttpRequestMessage request, ItemSearchInputDto filter, string username)
+        {
+            return CreateHttpResponse(request, () =>
+            {
+                var items = this.itemAppService.FindItems(username, filter.SearchKey, filter.SearchValue);
+                return request.CreateResponse(HttpStatusCode.OK, items);
             });
         }
     }

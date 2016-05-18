@@ -110,7 +110,10 @@
                             return {
                                 id: itemData.Id,
                                 text: itemData.FullName,
-                                children: true,
+                                children: itemData.ChildCount > 0,
+                                state: {
+                                    "opened": (itemData.ChildCount > 0) && false
+                                },
                                 li_attr: {
                                     "title": itemRemark
                                 }
@@ -157,9 +160,6 @@
                             });
                     };
 
-                },
-                controller: function ($scope) {
-                    $scope.doTest = function () { };
                 }
             };
         }]);
