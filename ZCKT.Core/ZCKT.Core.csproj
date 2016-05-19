@@ -78,6 +78,10 @@
     <Compile Include="DBHelpers\RawValue.cs" />
     <Compile Include="DTOs\ItemSearchInputDto.cs" />
     <Compile Include="DTOs\LoginInputDto.cs" />
+    <Compile Include="DTOs\PartItemWithChildCountDto.cs" />
+    <Compile Include="DTOs\PartItemWithHintDto.cs" />
+    <Compile Include="Entities\PartItemWithChildCount.cs" />
+    <Compile Include="Entities\PartItemWithHint.cs" />
     <Compile Include="Infrastructure\AutoMapperExtension.cs" />
     <Compile Include="Infrastructure\BaseAppService.cs" />
     <Compile Include="Infrastructure\DefaultUnitOfWork.cs" />

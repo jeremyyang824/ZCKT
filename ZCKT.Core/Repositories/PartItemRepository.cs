@@ -29,26 +29,26 @@ namespace ZCKT.Repositories
         /// 取得BOM根物料（限定产品）
         /// </summary>
         /// <param name="products">限定产品</param>
-        public List<PartItem> GetRootItems(IEnumerable<string> products)
+        public List<PartItemWithChildCount> GetRootItems(IEnumerable<string> products)
         {
-            string sql = $"SELECT {this.getEntityFields()} FROM dbo.TotalData WHERE ParentID=0";
+            string sql = $"SELECT {this.getEntityFields()},{this.getChildCountField()} FROM dbo.TotalData WHERE ParentID=0";
             if (products != null)
                 sql += $" AND Content IN ({this.getProductsConditionFragment(products)})";
             sql += " ORDER BY RowID";
-            return this.DBContext.ExecuteList<PartItem>(sql);
+            return this.DBContext.ExecuteList<PartItemWithChildCount>(sql);
         }
 
         /// <summary>
         /// 获取BOM单层子项
         /// </summary>
-        public List<PartItem> GetComponentItems(string parentId)
+        public List<PartItemWithChildCount> GetComponentItems(string parentId)
         {
             if (string.IsNullOrWhiteSpace(parentId))
                 throw new ArgumentNullException("parentId");
 
-            string sql = $"SELECT {this.getEntityFields()} FROM dbo.TotalData WHERE ParentID={{0}} ORDER BY RowID";
+            string sql = $"SELECT {this.getEntityFields()},{this.getChildCountField()} FROM dbo.TotalData WHERE ParentID={{0}} ORDER BY RowID";
             var cmd = DBContext.CreateCommand(sql, parentId);
-            return this.DBContext.ExecuteList<PartItem>(cmd);
+            return this.DBContext.ExecuteList<PartItemWithChildCount>(cmd);
         }
 
 
@@ -58,14 +58,14 @@ namespace ZCKT.Repositories
         /// <param name="products">限定产品</param>
         /// <param name="contentLike">国外码</param>
         /// <returns></returns>
-        public List<PartItem> FindItemsByContent(IEnumerable<string> products, string contentLike)
+        public List<PartItemWithHint> FindItemsByContent(IEnumerable<string> products, string contentLike)
         {
             if (string.IsNullOrWhiteSpace(contentLike))
                 throw new ArgumentNullException("contentLike");
 
             string sqlFilter = $"AND Content LIKE {{0}}";
             var cmd = DBContext.CreateCommand(findItemsSQL(products, sqlFilter), "%" + contentLike + "%");
-            return this.DBContext.ExecuteList<PartItem>(cmd);
+            return this.DBContext.ExecuteList<PartItemWithHint>(cmd);
         }
 
         /// <summary>
@@ -74,14 +74,14 @@ namespace ZCKT.Repositories
         /// <param name="products">限定产品</param>
         /// <param name="homcodeLike">国内码</param>
         /// <returns></returns>
-        public List<PartItem> FindItemsByHomcode(IEnumerable<string> products, string homcodeLike)
+        public List<PartItemWithHint> FindItemsByHomcode(IEnumerable<string> products, string homcodeLike)
         {
             if (string.IsNullOrWhiteSpace(homcodeLike))
                 throw new ArgumentNullException("homcodeLike");
 
             string sqlFilter = $"AND HomCode LIKE {{0}}";
             var cmd = DBContext.CreateCommand(findItemsSQL(products, sqlFilter), "%" + homcodeLike + "%");
-            return this.DBContext.ExecuteList<PartItem>(cmd);
+            return this.DBContext.ExecuteList<PartItemWithHint>(cmd);
         }
 
         /// <summary>
@@ -90,19 +90,19 @@ namespace ZCKT.Repositories
         /// <param name="products">限定产品</param>
         /// <param name="partnameLike">物料名</param>
         /// <returns></returns>
-        public List<PartItem> FindItemsByPartname(IEnumerable<string> products, string partnameLike)
+        public List<PartItemWithHint> FindItemsByPartname(IEnumerable<string> products, string partnameLike)
         {
             if (string.IsNullOrWhiteSpace(partnameLike))
                 throw new ArgumentNullException("partnameLike");
 
             string sqlFilter = $"AND PartName LIKE {{0}}";
             var cmd = DBContext.CreateCommand(findItemsSQL(products, sqlFilter), "%" + partnameLike + "%");
-            return this.DBContext.ExecuteList<PartItem>(cmd);
+            return this.DBContext.ExecuteList<PartItemWithHint>(cmd);
         }
 
 
 
-        //SQL语句，查找物料
+        //SQL语句，查找物料(PartItemWithHint), 限制50个查询结果
         private string findItemsSQL(IEnumerable<string> products, string sqlFilter)
         {
             //string sqlFilter = "AND Content = {{0}}";
@@ -116,7 +116,7 @@ namespace ZCKT.Repositories
                     FROM cte s
                         INNER JOIN dbo.TotalData p ON s.ParentID = p.ID
                 )
-                SELECT {this.getEntityFields()}
+                SELECT TOP 50 {this.getEntityFields()},{this.getHintFields()}
                 FROM dbo.TotalData
                 WHERE ID IN (
                     SELECT inr.TargetID FROM cte as inr
@@ -125,6 +125,7 @@ namespace ZCKT.Repositories
                 ORDER BY ID";
             return sqlFindItems;
         }
+
 
         //SQL片段，所属产品
         private string getProductsConditionFragment(IEnumerable<string> products)
@@ -137,8 +138,19 @@ namespace ZCKT.Repositories
 
         private string getEntityFields()
         {
-            return "[id] AS Id,[parentid] AS ParentID,[CodeID] AS CodeID,[content] AS ItemCode,[HomCode] AS HomCode,[CompCode] AS CompCode,[PartName] AS PartName,[PartPrice] AS PartPrice," +
-                   "(SELECT COUNT(1) FROM dbo.TotalData _cd WHERE _cd.parentid=dbo.TotalData.Id) AS ChildCount";
+            return "[id] AS Id,[parentid] AS ParentID,[CodeID] AS CodeID,[content] AS ItemCode,[HomCode] AS HomCode,[CompCode] AS CompCode,[PartName] AS PartName,[PartPrice] AS PartPrice";
+        }
+
+        private string getChildCountField()
+        {
+            return "(SELECT COUNT(1) FROM dbo.TotalData _cd WHERE _cd.parentid=dbo.TotalData.Id) AS ChildCount";
+        }
+
+        private string getHintFields()
+        {
+            //从BOM树根到目标物料（不含该目标物料）的路径索引
+            return "STUFF((SELECT '|'+l.ID FROM cte as l WHERE l.TargetID=dbo.TotalData.id AND l.ID<>l.TargetID ORDER BY l.TargetID,l.Lv DESC FOR XML PATH('')),1,1,'') AS IdHint,"
+                   + "STUFF((SELECT ' | '+l.ItemCode FROM cte as l WHERE l.TargetID=dbo.TotalData.id AND l.ID<>l.TargetID ORDER BY l.TargetID,l.Lv DESC FOR XML PATH('')),1,3,'') AS ItemCodeHint";
         }
     }
 }

@@ -34,30 +34,30 @@ namespace ZCKT.AppServices
         /// <summary>
         /// 取得根物料（产品）
         /// </summary>
-        public IEnumerable<PartItemDto> GetRootItems()
+        public IEnumerable<PartItemWithChildCountDto> GetRootItems()
         {
-            return this.partItemRepository.GetRootItems(null).MapTo<IEnumerable<PartItemDto>>();
+            return this.partItemRepository.GetRootItems(null).MapTo<IEnumerable<PartItemWithChildCountDto>>();
         }
 
         /// <summary>
         /// 取得用户负责产品
         /// </summary>
         /// <param name="username">用户名</param>
-        public IEnumerable<PartItemDto> GetRootItemsByUser(string username)
+        public IEnumerable<PartItemWithChildCountDto> GetRootItemsByUser(string username)
         {
             var products = this.memberRepository.GetUserProductTypes(username);
             if (!products.Any())
-                return new PartItemDto[0];  //none!
-            return this.partItemRepository.GetRootItems(products).MapTo<IEnumerable<PartItemDto>>();
+                return new PartItemWithChildCountDto[0];  //none!
+            return this.partItemRepository.GetRootItems(products).MapTo<IEnumerable<PartItemWithChildCountDto>>();
         }
 
         /// <summary>
         /// 取得物料子项
         /// </summary>
         /// <param name="parentId">父项ID</param>
-        public IEnumerable<PartItemDto> GetComponentItems(string parentId)
+        public IEnumerable<PartItemWithChildCountDto> GetComponentItems(string parentId)
         {
-            return this.partItemRepository.GetComponentItems(parentId).MapTo<IEnumerable<PartItemDto>>();
+            return this.partItemRepository.GetComponentItems(parentId).MapTo<IEnumerable<PartItemWithChildCountDto>>();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace ZCKT.AppServices
         /// <param name="searchKey">Content/HomCode/PartName</param>
         /// <param name="searchValue"></param>
         /// <returns></returns>
-        public IEnumerable<PartItemDto> FindItems(string username, string searchKey, string searchValue)
+        public IEnumerable<PartItemWithHintDto> FindItems(string username, string searchKey, string searchValue)
         {
             if (string.IsNullOrWhiteSpace(searchKey))
                 throw new ArgumentNullException("searchKey");
@@ -76,23 +76,23 @@ namespace ZCKT.AppServices
 
             var products = this.memberRepository.GetUserProductTypes(username);
             if (!products.Any())
-                return new PartItemDto[0];  //none!
+                return new PartItemWithHintDto[0];  //none!
 
-            IEnumerable<PartItemDto> results = null;
+            IEnumerable<PartItemWithHintDto> results = null;
             if (searchKey == "Content")
             {
                 results = this.partItemRepository.FindItemsByContent(products, searchValue)
-                    .MapTo<IEnumerable<PartItemDto>>();
+                    .MapTo<IEnumerable<PartItemWithHintDto>>();
             }
             else if (searchKey == "HomCode")
             {
                 results = this.partItemRepository.FindItemsByHomcode(products, searchValue)
-                    .MapTo<IEnumerable<PartItemDto>>();
+                    .MapTo<IEnumerable<PartItemWithHintDto>>();
             }
             else if (searchKey == "PartName")
             {
                 results = this.partItemRepository.FindItemsByPartname(products, searchValue)
-                    .MapTo<IEnumerable<PartItemDto>>();
+                    .MapTo<IEnumerable<PartItemWithHintDto>>();
             }
             else
                 throw new DomainException("Unknow search key [{0}]!", searchKey);

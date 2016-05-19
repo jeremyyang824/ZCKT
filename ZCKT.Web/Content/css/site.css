@@ -116,7 +116,13 @@ body {
 
 .result-item {
     cursor: pointer;
+    background-color: #F8F8F8;
 }
+
+    .result-item:hover {
+        background-color: #e7f4f9 !important;
+        /*box-shadow: inset 0 0 1px #cccccc !important;*/
+    }
 
     .result-item.active {
         text-shadow: 0 -1px 0 #beebff;
@@ -132,167 +138,45 @@ body {
             filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#beebff', endColorstr='#a8e4ff', GradientType=0);
             background-repeat: repeat-x;
             border-color: #beebff;
-            /****/
             z-index: 2;
             color: #333;
             background-color: #beebff;
             border-color: #beebff;
         }
 
-            .result-item.active .list-group-item-text,
-            .result-item.active:hover .list-group-item-text,
-            .result-item.active:focus .list-group-item-text {
-                color: #333;
-            }
 
+            .result-item .list-group-item-heading,
             .result-item.active .list-group-item-heading,
             .result-item.active:hover .list-group-item-heading,
             .result-item.active:focus .list-group-item-heading {
+                font-weight: bold;
+                margin-bottom: 6px;
                 color: #333;
             }
 
-/*************************/
+            .result-item .list-group-item-text,
+            .result-item.active .list-group-item-text,
+            .result-item.active:hover .list-group-item-text,
+            .result-item.active:focus .list-group-item-text {
+                margin-top: 5px;
+                font-size: 13px;
+                color: #333;
+            }
 
-#sidebar {
-    width: inherit;
-    -moz-min-width: 220px;
-    -ms-min-width: 220px;
-    -o-min-width: 220px;
-    -webkit-min-width: 220px;
-    min-width: 220px;
-    max-width: 220px;
-    background-color: #f5f5f5;
-    float: left;
-    height: 100%;
-    position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
+.label-hint {
+    color: #333;
+    margin-right: 5px;
+    padding: .2em .3em;
+    font-weight: normal;
+    background-color: #e7f4f9;
 }
 
-#main {
-    height: 100%;
-    overflow: auto;
-    background-color: whitesmoke;
+.jstree-node-highlight > div.jstree-wholerow {
+    background: #e7f4f9;
+    box-shadow: inset 0 0 5px #a8e4ff;
 }
 
-.panel-body h4 {
-    color: #a55400;
-}
-
-.red {
-    color: red;
-}
-
-.green {
-    color: green;
-}
-
-.shortPanel {
-    max-height: 282px !important;
-    overflow-y: auto;
-}
-
-.shortPadding {
-    padding: 1px !important;
-}
-
-.shortMargin {
-    margin: 0 !important;
-}
-
-ul.pagination > li {
-    cursor: pointer;
-}
-
-/* Fixes alignment in nav lists */
-.nav-pills [class^="fa-"],
-.nav-pills [class*=" fa-"] {
-    line-height: inherit;
-}
-
-.userinfo {
-    margin-right: 10px;
-    font-size: large;
-    background-color: white;
-}
-
-/* Autocomplete section */
-.angucomplete-dropdown {
-    overflow-y: auto;
-    max-height: 200px;
-}
-
-.angucomplete-holder {
-    position: relative;
-}
-
-.angucomplete-dropdown {
-    border-color: #ececec;
-    border-width: 1px;
-    border-style: solid;
-    -ms-border-radius: 2px;
-    border-radius: 2px;
-    width: 250px;
-    padding: 6px;
-    cursor: pointer;
-    z-index: 9999;
-    position: absolute;
-    /*top: 32px;
-    left: 0px;
-    */
-    margin-top: -6px;
-    background-color: #ffffff;
-}
-
-.angucomplete-searching {
-    color: #acacac;
-    font-size: 14px;
-}
-
-.angucomplete-description {
-    font-size: 14px;
-}
-
-.angucomplete-row {
-    padding: 5px;
-    color: #000000;
-    margin-bottom: 4px;
-    clear: both;
-}
-
-.angucomplete-selected-row {
-    background-color: lightblue;
-    color: #ffffff;
-}
-
-.angucomplete-image-holder {
-    padding-top: 2px;
-    float: left;
-    margin-right: 10px;
-    margin-left: 5px;
-}
-
-.angucomplete-image {
-    height: 34px;
-    width: 34px;
-    -ms-border-radius: 50%;
-    border-radius: 50%;
-    border-color: #ececec;
-    border-style: solid;
-    border-width: 1px;
-}
-
-.angucomplete-image-default {
-    /* Add your own default image here
-     background-image: url('/assets/default.png');
-    */
-    background-position: center;
-    -ms-background-size: contain;
-    background-size: contain;
-    height: 34px;
-    width: 34px;
-}
-
-.red {
-    color: red;
+.jstree-wholerow-clicked {
+    background: #beebff !important;
+    background: linear-gradient(to bottom, #beebff 0%, #a8e4ff 100%) !important;
 }

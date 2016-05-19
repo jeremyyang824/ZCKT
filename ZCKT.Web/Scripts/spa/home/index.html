@@ -8,13 +8,26 @@
             </span>
         </div>
     </div>
-    <bom-tree username="{{username}}" select-node-id=""></bom-tree>
+    <bom-tree username="{{username}}" hints="searchResultIdHints" targets="searchResultIds" scroll-to-node-id="{{selectedItem.Id}}" on-select-node="onSelectTreeNode(id)"></bom-tree>
 </div>
 <collapse-bar is-open="resultBarIsOpen">
     <div class="list-group">
         <a class="list-group-item result-item" ng-repeat="item in searchResult" ng-click="onSelectItem(item)" ng-class="isActived(item)">
-            <h5 class="list-group-item-heading">{{item.FullName}}</h5>
-            <div class="list-group-item-text">{{item.PartName}}</div>
+            <p class="list-group-item-heading">
+                <span>[{{$index}}]</span> {{item.ItemCode}}
+            </p>
+            <div class="list-group-item-text">
+                国内码：{{item.HomCode}}
+            </div>
+            <div class="list-group-item-text">
+                公司码：{{item.CompCode}}
+            </div>
+            <div class="list-group-item-text">
+                零件名：{{item.PartName}}
+            </div>
+            <div class="list-group-item-text">
+                <span class="label label-hint" ng-repeat="hint in item.ItemCodeHint">{{hint}}</span>
+            </div>
         </a>
     </div>
 </collapse-bar>

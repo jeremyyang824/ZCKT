@@ -36,11 +36,6 @@ namespace ZCKT.Entities
         /// <summary>
         /// 零件价格
         /// </summary>
-        public decimal? PartPrice { get; set; }
-
-        /// <summary>
-        /// 子项数量
-        /// </summary>
-        public int ChildCount { get; set; }
+        public decimal? PartPrice { get; set; }       
     }
 }

@@ -16,8 +16,8 @@ namespace ZCKT.Validators
                 .WithMessage("SearchKey required!");
 
             this.RuleFor(r => r.SearchValue).NotEmpty()
-                .Must(r => r.Length > 3)
-                .WithMessage("SearchValue required and must be longer than 3 charters!");
+                .Must(r => r.Length >= 3)
+                .WithMessage("查询内容必须大等于3个字符!");
         }
     }
 }

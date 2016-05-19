@@ -212,7 +212,6 @@
     <Content Include="Content\vendors\angular-route\angular-route.min.js.map" />
     <Content Include="Content\vendors\angular-cookies\angular-cookies.min.js.map" />
     <Content Include="Scripts\spa\directives\bomTree.directive.js" />
-    <Content Include="Scripts\spa\directives\bomTree.html" />
     <Content Include="Scripts\spa\directives\collapseBar.directive.js" />
     <Content Include="Scripts\spa\directives\topBar.directive.js" />
     <Content Include="Scripts\spa\directives\topBar.html" />

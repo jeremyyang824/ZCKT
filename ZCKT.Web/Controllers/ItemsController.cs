@@ -37,16 +37,16 @@ namespace ZCKT.Web.Controllers
             });
         }
 
-        [HttpGet]
-        [Route("roots")]
-        public HttpResponseMessage GetRootItems(HttpRequestMessage request)
-        {
-            return CreateHttpResponse(request, () =>
-            {
-                var roots = this.itemAppService.GetRootItems();
-                return request.CreateResponse(HttpStatusCode.OK, roots);
-            });
-        }
+        //[HttpGet]
+        //[Route("roots")]
+        //public HttpResponseMessage GetRootItems(HttpRequestMessage request)
+        //{
+        //    return CreateHttpResponse(request, () =>
+        //    {
+        //        var roots = this.itemAppService.GetRootItems();
+        //        return request.CreateResponse(HttpStatusCode.OK, roots);
+        //    });
+        //}
 
         [HttpGet]
         [Route("roots/{username}")]
