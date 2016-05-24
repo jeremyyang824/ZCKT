@@ -2,7 +2,18 @@
     <div class="form-inline" style="margin-top: 5px; margin-bottom: 5px;">
         <select ng-model="searchKey" class="form-control input-sm" ng-options="option.value as option.name for option in searchConitions"></select>
         <div class="input-group input-group-sm">
-            <input type="text" class="form-control" ng-model="searchVal" ng-trim="true" style="width: 148px;" />
+            <input type="text" class="form-control" ng-model="searchVal" ng-trim="true" style="width: 148px;"/>
+            <!--<angucomplete-alt ng-class="custom-input"
+                              placeholder=""
+                              pause="200"
+                              selected-object="selectCustomer"
+                              remote-url="/api/items/autocomplete"
+                              remote-url-data-field=""
+                              remote-url-request-formatter=""
+                              title-field="Name"
+                              input-class="form-control custom-input"
+                              text-searching="查询中..."
+                              text-no-results="未找到匹配物料" />-->
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button" ng-click="onSearch()">查询<i class="fa fa-search fa-fw"></i></button>
             </span>
@@ -32,7 +43,34 @@
     </div>
 </collapse-bar>
 <div id="rightRegion">
-    <div class="col-md-12">
-        adsfasdf:{{resultBarIsOpen}}
+    <div class="col-md-12" style="padding:8px;height:100%;">
+        <div class="panel panel-default" ng-show="targetItem != null" style="height:100%;margin:0;">
+            <div class="panel-heading">
+                <strong>{{targetItem.ItemCode}}</strong>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-condensed" style="margin-bottom: 10px;">
+                        <tr>
+                            <td class="td-label">国外码:</td>
+                            <td class="td-content">{{targetItem.ItemCode}}</td>
+                            <td class="td-label">国内码:</td>
+                            <td class="td-content">{{targetItem.HomCode}}</td>
+                            <td class="td-label">公司码:</td>
+                            <td class="td-content">{{targetItem.CompCode}}</td>
+                        </tr>
+                        <tr>
+                            <td class="td-label">零件名:</td>
+                            <td class="td-content" colspan="3">{{targetItem.PartName}}</td>
+                            <td class="td-label">零件价:</td>
+                            <td class="td-content">{{targetItem.PartPrice}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="panel-body" style="position: absolute; top:125px;bottom: 10px;">
+                <img-gzoom src="{{targetItem.ImageName}}"></img-gzoom>
+            </div>
+        </div>
     </div>
 </div>

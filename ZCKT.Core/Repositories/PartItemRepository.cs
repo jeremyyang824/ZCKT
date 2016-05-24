@@ -85,6 +85,23 @@ namespace ZCKT.Repositories
         }
 
         /// <summary>
+        /// 根据公司码模糊查找
+        /// </summary>
+        /// <param name="products">限定产品</param>
+        /// <param name="compcodeLike">公司码</param>
+        /// <returns></returns>
+        public List<PartItemWithHint> FindItemsByCompcode(IEnumerable<string> products, string compcodeLike)
+        {
+
+            if (string.IsNullOrWhiteSpace(compcodeLike))
+                throw new ArgumentNullException("compcodeLike");
+
+            string sqlFilter = $"AND CompCode LIKE {{0}}";
+            var cmd = DBContext.CreateCommand(findItemsSQL(products, sqlFilter), "%" + compcodeLike + "%");
+            return this.DBContext.ExecuteList<PartItemWithHint>(cmd);
+        }
+
+        /// <summary>
         /// 根据物料名模糊查找
         /// </summary>
         /// <param name="products">限定产品</param>

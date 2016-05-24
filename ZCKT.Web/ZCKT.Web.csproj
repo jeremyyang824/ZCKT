@@ -190,6 +190,8 @@
     <Content Include="Content\vendors\toastr\toastr.js" />
     <Content Include="Content\vendors\toastr\toastr.min.css" />
     <Content Include="Content\vendors\toastr\toastr.min.js" />
+    <Content Include="Content\vendors\zoom\jquery.zoom.js" />
+    <Content Include="Content\vendors\zoom\jquery.zoom.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\vendors\jquery\jquery.min.map" />
@@ -211,13 +213,18 @@
     <Content Include="Content\vendors\angular\angular.min.js.map" />
     <Content Include="Content\vendors\angular-route\angular-route.min.js.map" />
     <Content Include="Content\vendors\angular-cookies\angular-cookies.min.js.map" />
+    <Content Include="PartImages\1CBE80100300.JPG" />
+    <Content Include="PartImages\4001018053.jpg" />
+    <Content Include="PartImages\none.jpg" />
     <Content Include="Scripts\spa\directives\bomTree.directive.js" />
     <Content Include="Scripts\spa\directives\collapseBar.directive.js" />
+    <Content Include="Scripts\spa\directives\imgGzoom.directive.js" />
     <Content Include="Scripts\spa\directives\topBar.directive.js" />
     <Content Include="Scripts\spa\directives\topBar.html" />
     <Content Include="Scripts\spa\home\index.html" />
     <Content Include="Scripts\spa\home\indexCtrl.js" />
     <Content Include="Scripts\spa\home\rootCtrl.js" />
+    <Content Include="Scripts\spa\home\unauthenticated.html" />
     <Content Include="Scripts\spa\modules\common.core.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\spa\app.js" />

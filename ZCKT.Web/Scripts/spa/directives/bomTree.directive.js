@@ -57,6 +57,7 @@
 
                         var scrollTo = $(".bomtree .jstree li[id=" + $scope.scrollToNodeId + "]");
                         if (scrollTo.length) {
+                            //console.log('[' + scrollTo.offset().top + '][' + $container.offset().top + '][' + $container.scrollTop() + ']');
                             $container.animate({
                                 scrollTop: scrollTo.offset().top - $container.offset().top + $container.scrollTop()
                             });

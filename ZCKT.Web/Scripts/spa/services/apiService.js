@@ -14,7 +14,7 @@
                         success(result);
                     })
                     .catch(function (error) {
-                        debugger;
+                        //debugger;
                         if (error.status === '401') {
                             notificationService.displayError('Authentication required.');
                             $rootScope.previousState = $location.path();
@@ -31,7 +31,7 @@
                         success(result);
                     })
                     .catch(function (error) {
-                        debugger;
+                        //debugger;
                         if (error.status === '401') {
                             notificationService.displayError('Authentication required.');
                             $rootScope.previousState = $location.path();

@@ -80,6 +80,7 @@
     <Compile Include="DTOs\LoginInputDto.cs" />
     <Compile Include="DTOs\PartItemWithChildCountDto.cs" />
     <Compile Include="DTOs\PartItemWithHintDto.cs" />
+    <Compile Include="DTOs\PartItemWithImageDto.cs" />
     <Compile Include="Entities\PartItemWithChildCount.cs" />
     <Compile Include="Entities\PartItemWithHint.cs" />
     <Compile Include="Infrastructure\AutoMapperExtension.cs" />

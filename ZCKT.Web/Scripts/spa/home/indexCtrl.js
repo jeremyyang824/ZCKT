@@ -10,6 +10,7 @@
             $scope.searchConitions = [
                 { name: '国外码', value: 'Content' },
                 { name: '国内码', value: 'HomCode' },
+                { name: '公司码', value: 'CompCode' },
                 { name: '物料名', value: 'PartName' }
             ];
             $scope.searchKey = $scope.searchConitions[0].value;
@@ -18,7 +19,8 @@
             $scope.searchResultIdHints = [];  //查询结果在BOM树上的路径Id（打开哪些树节点）
             $scope.searchResultIds = [];
 
-            $scope.selectedItem = null;
+            $scope.selectedItem = null; //查询结果栏中选中的物料
+            $scope.targetItem = null;   //显示该物料的图片及明细
 
             $scope.onSearch = onSearch;
             $scope.onSelectItem = onSelectItem;
@@ -32,6 +34,7 @@
                 }
 
                 //查找物料
+                $scope.targetItem = null;
                 $scope.loadingItems = true;
                 apiService.post('/api/items/search/' + $scope.username,
                     {
@@ -68,7 +71,15 @@
             };
 
             function onSelectTreeNode(id) {
-                notificationService.displayInfo(id);
+                if (id != null && id !== '') {
+                    apiService.get('/api/items/details/' + id, null,
+                        function (result) {
+                            $scope.targetItem = result.data;
+                        },
+                        function (response) {
+                            notificationService.displayError(response.data);
+                        });
+                }
             };
 
             function buildSearchResultIdHints() {

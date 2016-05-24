@@ -8,43 +8,12 @@
                 $routeProvider
                     .when("/", {
                         templateUrl: "/scripts/spa/home/index.html",
-                        controller: "indexCtrl"
+                        controller: "indexCtrl",
+                        resolve: { isAuthenticated: isAuthenticated }
                     })
-                    //.when("/login", {
-                    //    templateUrl: "scripts/spa/account/login.html",
-                    //    controller: "loginCtrl"
-                    //})
-                    //.when("/register", {
-                    //    templateUrl: "scripts/spa/account/register.html",
-                    //    controller: "registerCtrl"
-                    //})
-                    //.when("/customers", {
-                    //    templateUrl: "scripts/spa/customers/customers.html",
-                    //    controller: "customersCtrl",
-                    //    resolve: { isAuthenticated: isAuthenticated }
-                    //})
-                    //.when("/customers/register", {
-                    //    templateUrl: "scripts/spa/customers/register.html",
-                    //    controller: "customersRegCtrl"
-                    //})
-                    //.when("/movies", {
-                    //    templateUrl: "scripts/spa/movies/movies.html",
-                    //    controller: "moviesCtrl"
-                    //})
-                    //.when("/movies/add", {
-                    //    templateUrl: "scripts/spa/movies/add.html",
-                    //    controller: "movieAddCtrl",
-                    //    resolve: { isAuthenticated: isAuthenticated }
-                    //})
-                    //.when("/movies/:id", {
-                    //    templateUrl: "scripts/spa/movies/details.html",
-                    //    controller: "movieDetailsCtrl",
-                    //    resolve: { isAuthenticated: isAuthenticated }
-                    //})
-                    //.when("/movies/edit/:id", {
-                    //    templateUrl: "scripts/spa/movies/edit.html",
-                    //    controller: "movieEditCtrl"
-                    //})
+                    .when("/unauthenticated", {
+                        templateUrl: "/scripts/spa/home/unauthenticated.html"
+                    })
                     .otherwise({ redirectTo: "/" });
             }])
         .run(['$rootScope', '$location', '$cookieStore', '$http',
@@ -63,7 +32,7 @@
     function isAuthenticated(membershipService, $rootScope, $location) {
         if (!membershipService.isUserLoggedIn()) {
             $rootScope.previousState = $location.path();
-            $location.path('/login');
+            $location.path('/unauthenticated');
         }
     }
 

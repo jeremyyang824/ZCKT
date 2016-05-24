@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using ZCKT.DTOs;
 using ZCKT.Entities;
 using ZCKT.Infrastructure;
@@ -15,6 +17,9 @@ namespace ZCKT.AppServices
         private readonly PartItemRepository partItemRepository;
         private readonly MemberRepository memberRepository;
 
+        private readonly string baseImagePath = "/PartImages/";
+        private readonly string[] suffixs = new string[] { "jpg", "gif" };
+
         public ItemAppService(
             PartItemRepository partItemRepository,
             MemberRepository memberRepository)
@@ -26,9 +31,46 @@ namespace ZCKT.AppServices
         /// <summary>
         /// 取得物料信息
         /// </summary>
-        public PartItemDto GetItem(string id)
+        public PartItemWithImageDto GetItem(string id)
         {
-            return this.partItemRepository.GetByKey(id).MapTo<PartItemDto>();
+            PartItemWithImageDto dto = this.partItemRepository.GetByKey(id).MapTo<PartItemWithImageDto>();
+            if (dto == null)
+                return null;
+
+            string imageName = null;
+            foreach (var suffix in suffixs)
+            {
+                if (dto.ItemCode != null && tryGetImageName(dto.ItemCode, suffix, out imageName))
+                    break;
+                if (dto.CompCode != null && tryGetImageName(dto.CompCode, suffix, out imageName))
+                    break;
+                if (dto.HomCode != null && tryGetImageName(dto.HomCode, suffix, out imageName))
+                    break;
+            }
+            dto.ImageName = imageName ?? "/PartImages/none.jpg";
+            return dto;
+        }
+
+        private bool tryGetImageName(string code, string suffix, out string imageName)
+        {
+            if (string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(suffix))
+                throw new ArgumentNullException();
+
+            imageName = null;
+            string filePath = $"{baseImagePath}{code.Trim()}.{suffix}";
+            try
+            {
+                if (File.Exists(HttpContext.Current.Server.MapPath(filePath)))
+                {
+                    imageName = filePath;
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return false;
         }
 
         /// <summary>
@@ -87,6 +129,11 @@ namespace ZCKT.AppServices
             else if (searchKey == "HomCode")
             {
                 results = this.partItemRepository.FindItemsByHomcode(products, searchValue)
+                    .MapTo<IEnumerable<PartItemWithHintDto>>();
+            }
+            else if (searchKey == "CompCode")
+            {
+                results = this.partItemRepository.FindItemsByCompcode(products, searchValue)
                     .MapTo<IEnumerable<PartItemWithHintDto>>();
             }
             else if (searchKey == "PartName")

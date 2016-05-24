@@ -27,6 +27,9 @@ namespace ZCKT
                 .IncludeBase<PartItem, PartItemDto>()
                 .ForMember(vm => vm.IdHint, map => map.MapFrom(m => m.IdHint.Split('|').Select(i => i.Trim())))
                 .ForMember(vm => vm.ItemCodeHint, map => map.MapFrom(m => m.ItemCodeHint.Split('|').Select(i => i.Trim())));
+
+            mapperConfig.CreateMap<PartItem, PartItemWithImageDto>()
+                .IncludeBase<PartItem, PartItemDto>();
         }
     }
 }

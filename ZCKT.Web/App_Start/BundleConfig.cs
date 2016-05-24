@@ -29,7 +29,9 @@ namespace ZCKT.Web
                 //angularjs loading-bar
                 "~/Content/vendors/angular-loading-bar/loading-bar.js",
                 //jstree
-                "~/Content/vendors/jstree/jstree.js"
+                "~/Content/vendors/jstree/jstree.js",
+                //jquery-gzoom
+                "~/Content/vendors/zoom/jquery.zoom.js"
                 ));
 
             bundles.Add(new StyleBundle("~/bundles/css/vendors").Include(
@@ -61,6 +63,7 @@ namespace ZCKT.Web
                 "~/Scripts/spa/directives/topBar.directive.js",
                 "~/Scripts/spa/directives/bomTree.directive.js",
                 "~/Scripts/spa/directives/collapseBar.directive.js",
+                "~/Scripts/spa/directives/imgGzoom.directive.js",
                 //controller
                 "~/Scripts/spa/home/rootCtrl.js",
                 "~/Scripts/spa/home/indexCtrl.js"

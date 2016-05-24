@@ -93,6 +93,7 @@ body {
 
 #rightRegion {
     height: 100%;
+    position: relative;
     overflow: auto;
 }
 
@@ -179,4 +180,20 @@ body {
 .jstree-wholerow-clicked {
     background: #beebff !important;
     background: linear-gradient(to bottom, #beebff 0%, #a8e4ff 100%) !important;
+}
+
+.td-label {
+    width: 80px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.td-content {
+    width: 200px;
+    text-align: left;
+}
+
+.custom-input {
+    width: 148px !important;
+    height: 30px !important;
 }
