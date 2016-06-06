@@ -21,11 +21,13 @@
 
             $scope.selectedItem = null; //查询结果栏中选中的物料
             $scope.targetItem = null;   //显示该物料的图片及明细
+            $scope.scrollToId = null;   //Tree滚动到的物料
 
             $scope.onSearch = onSearch;
             $scope.onSelectItem = onSelectItem;
             $scope.isActived = isActived;
             $scope.onSelectTreeNode = onSelectTreeNode;
+            $scope.onCheckHint = onCheckHint;
 
             function onSearch() {
                 if ($scope.searchVal === '') {
@@ -42,7 +44,8 @@
                         SearchValue: $scope.searchVal
                     },
                     function (result) {
-                        $scope.searchResult = result.data;
+                        var dataList = result.data;
+                        $scope.searchResult = dataList;
 
                         if ($scope.searchResult.length >= 50)
                             notificationService.displayWarning('最多显示50个查询结果!');
@@ -64,6 +67,9 @@
 
             function onSelectItem(item) {
                 $scope.selectedItem = item;
+                if ($scope.selectedItem != null) {
+                    $scope.scrollToId = $scope.selectedItem.Id;
+                }
             };
 
             function isActived(item) {
@@ -82,16 +88,24 @@
                 }
             };
 
+            function onCheckHint(hint, item) {
+                $scope.selectedItem = item;
+                if (hint != null) {
+                    $scope.scrollToId = hint.Id;
+                }
+                return false;
+            }
+
             function buildSearchResultIdHints() {
                 var result = [], hash = {};
                 //iter items
                 $scope.searchResult.forEach(function (val) {
-                    if (val && val.IdHint && Array.isArray(val.IdHint)) {
+                    if (val && val.Hints && Array.isArray(val.Hints)) {
                         //iter item hints
-                        val.IdHint.forEach(function (ival) {
-                            if (!hash[ival]) {
-                                result.push(ival);
-                                hash[ival] = true;
+                        val.Hints.forEach(function (hint) {
+                            if (!hash[hint.Id]) {
+                                result.push(hint.Id);
+                                hash[hint.Id] = true;
                             }
                         });
                     }

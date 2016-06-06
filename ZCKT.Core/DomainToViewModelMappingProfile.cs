@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using ZCKT.DTOs;
 using ZCKT.Entities;
+using ZCKT.Infrastructure;
 
 namespace ZCKT
 {
@@ -25,11 +26,32 @@ namespace ZCKT
 
             mapperConfig.CreateMap<PartItemWithHint, PartItemWithHintDto>()
                 .IncludeBase<PartItem, PartItemDto>()
-                .ForMember(vm => vm.IdHint, map => map.MapFrom(m => m.IdHint.Split('|').Select(i => i.Trim())))
-                .ForMember(vm => vm.ItemCodeHint, map => map.MapFrom(m => m.ItemCodeHint.Split('|').Select(i => i.Trim())));
+                .ForMember(vm => vm.Hints, map => map.MapFrom(m => this.buildHintDto(m)));
+            //.ForMember(vm => vm.IdHint, map => map.MapFrom(m => m.IdHint.Split('|').Select(i => i.Trim())))
+            //.ForMember(vm => vm.ItemCodeHint, map => map.MapFrom(m => m.ItemCodeHint.Split('|').Select(i => i.Trim())));
 
             mapperConfig.CreateMap<PartItem, PartItemWithImageDto>()
                 .IncludeBase<PartItem, PartItemDto>();
+        }
+
+        private HintDto[] buildHintDto(PartItemWithHint itemWithHint)
+        {
+            var idHints = itemWithHint.IdHint.Split('|').Select(i => i.Trim()).ToArray();
+            var itemCodeHints = itemWithHint.ItemCodeHint.Split('|').Select(i => i.Trim()).ToArray();
+            if (idHints.Length != itemCodeHints.Length)
+                throw new DomainException("hints length error");
+
+            List<HintDto> hints = new List<HintDto>();
+            for (int i = 0; i < idHints.Length; i++)
+            {
+                HintDto hi = new HintDto
+                {
+                    Id = idHints[i],
+                    ItemCode = itemCodeHints[i]
+                };
+                hints.Add(hi);
+            }
+            return hints.ToArray();
         }
     }
 }

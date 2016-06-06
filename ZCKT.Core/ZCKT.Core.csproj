@@ -76,6 +76,7 @@
     <Compile Include="DBHelpers\DBHelper.Core.cs" />
     <Compile Include="DBHelpers\DBHelper.StringOverloads.cs" />
     <Compile Include="DBHelpers\RawValue.cs" />
+    <Compile Include="DTOs\HintDto.cs" />
     <Compile Include="DTOs\ItemSearchInputDto.cs" />
     <Compile Include="DTOs\LoginInputDto.cs" />
     <Compile Include="DTOs\PartItemWithChildCountDto.cs" />
